@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苹果风动效预览 - 极简个人网站</title>
+    <style>
+        /* 全局基础设置：苹果风核心是字体、留白和对比度 */
+        :root {
+            --bg-color: #fbfbfd; /* 苹果常用的柔和灰白背景 */
+            --text-color: #1d1d1f; /* 深邃但不纯黑的文字 */
+            --card-bg: #ffffff;
+            --accent-color: #0066cc;
+            --secondary-text: #86868b;
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased; /* 让字体渲染更细腻 */
+        }
+
+        /* =========================================
+           动效 1：毛玻璃导航栏 (Frosted Glass)
+           ========================================= */
+        nav {
+            position: fixed;
+            top: 0; width: 100%; height: 60px;
+            background: rgba(251, 251, 253, 0.7);
+            backdrop-filter: saturate(180%) blur(20px); /* 核心：饱和度提升+模糊 */
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 100;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+        }
+
+        .container {
+            max-width: 700px; 
+            margin: 120px auto; 
+            padding: 20px;
+        }
+
+        /* =========================================
+           动效 2：滚动渐显 (Scroll Reveal)
+           ========================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px); /* 初始状态在下方 40px */
+            /* 使用 cubic-bezier 模拟苹果经典的丝滑缓动曲线 */
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 延时控制：让同组元素依次出现 */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+
+        /* =========================================
+           动效 3：卡片弹性悬浮 (Soft Hover)
+           ========================================= */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+            /* 悬停过渡时间要适中，不能太快 */
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.01); /* 轻微上浮和放大 */
+            box-shadow: 0 16px 40px rgba(0,0,0,0.08); /* 阴影变深变宽 */
+        }
+
+        /* =========================================
+           动效 4：按钮微交互 (Micro-interactions)
+           ========================================= */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: var(--text-color);
+            color: var(--card-bg);
+            border-radius: 980px; /* 经典药丸按钮 */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn:active {
+            transform: scale(0.96); /* 点击时的真实物理按压反馈 */
+        }
+
+        /* 排版样式补充 */
+        h1 { font-size: 48px; letter-spacing: -0.015em; margin-bottom: 10px; }
+        h2 { font-size: 28px; letter-spacing: -0.01em; }
+        p { font-size: 18px; color: var(--secondary-text); margin-bottom: 30px; }
+        .spacer { height: 40vh; display: flex; align-items: center; justify-content: center; color: var(--secondary-text); font-size: 14px; }
+
+    </style>
+</head>
+<body>
+    <nav>MY PORTFOLIO</nav>
+    
+    <div class="container">
+        <!-- 首屏区域 -->
+        <div class="reveal">
+            <h1>极简，但不简单。</h1>
+        </div>
+        <div class="reveal delay-1">
+            <p>这是一个完全使用原生代码编写的动效演示。<br>向下滚动，体验如丝般顺滑的视觉反馈。</p>
+        </div>
+        <div class="reveal delay-2">
+            <a href="#" class="btn">点击体验按钮微动效</a>
+        </div>
+        
+        <div class="spacer">↓ 轻轻向下滚动 ↓</div>
+
+        <!-- 作品卡片区域 -->
+        <div class="card reveal">
+            <h2>作品卡片弹性悬浮</h2>
+            <p>将鼠标移到这个卡片上，你会看到平滑的上浮效果和柔和的阴影扩散。这种设计模拟了真实的物理空间感，赋予界面呼吸感。</p>
+        </div>
+
+        <div class="spacer">↓ 更多内容 ↓</div>
+
+        <!-- 纯静态声明 -->
+        <div class="card reveal">
+            <h2>纯原生，零依赖</h2>
+            <p>无需 Node.js，无需安装庞大的动画库。仅用几十行基础 CSS 和一个极轻量的原生 JS 监听器，即可实现优雅的苹果风视觉体验。</p>
+            <a href="#" class="btn" style="background: #0066cc;">查看详情</a>
+        </div>
+        
+        <div class="spacer">到底了</div>
+    </div>
+
+    <script>
+        // 使用原生 Intersection Observer API 实现滚动监听
+        // 当元素进入视口 15% 时，触发动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        // 监听所有带有 reveal 类的元素
+        document.querySelectorAll('.reveal').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
